@@ -2,6 +2,8 @@ var React = require('react')
 var ReactPivot = require('react-pivot')
 var createReactClass = require('create-react-class')
 
+const rows = require('./data.json')
+
 module.exports = createReactClass({
   render() {
     return (<ReactPivot rows={rows}
@@ -11,8 +13,6 @@ module.exports = createReactClass({
       activeDimensions={['Date', 'Host']} />)
   }
 })
-
-const rows = require('./data.json')
 
 const dimensions = [
   { value: 'date', title: 'Date' },
