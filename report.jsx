@@ -10,13 +10,17 @@ var dimensions = [
 ]
 
 var reducer = function (row, acc) {
-  // if (row.type === 'impression') acc.impressions = (acc.impressions || 0) + 1
+  // acc.impressions = row.type === 'impression' ? (acc.impressions || 0) : (acc.impressions || 0) + 1
+  // acc.impressions = (acc.impressions || 0) + (row.type === 'impression' ? 1 : 0)
 
-  acc.impressions = (acc.impressions || 0) + (row.type === 'impression' ? 1 : 0)
-  acc.loads = (acc.loads || 0) + (row.type === 'load' ? 1 : 0)
-  acc.displays = (acc.displays || 0) + (row.type === 'display' ? 1 : 0)
-  acc.loadRate = acc.loads / acc.impressions
-  acc.displayRate = acc.displays / acc.loads
+  if (row.type === 'impression')
+    acc.impressions = (acc.impressions || 0) + 1
+
+  if (row.type === 'load')
+    acc.loads = (acc.loads || 0) + 1
+
+  if (row.type === 'display')
+    acc.displays = (acc.displays || 0) + 1
 
   return acc
 }
@@ -27,32 +31,30 @@ var calculations = [
   { title: 'Displays', value: 'displays' },
   {
     title: 'Load Rate', value: 'loadRate',
-    template: function(val, row) {
-      return (val * 100).toFixed(1) + '%'
+    template: function (val, row) {
+      return (row.loads / row.impressions * 100).toFixed(1) + '%'
     },
-    sortBy: function(row) {
-      return row.loadRate
+    sortBy: function (row) {
+      return row.loads / row.impressions
     }
   },
   {
     title: 'Display Rate', value: 'displayRate',
-    template: function(val, row) {
-      return (val * 100).toFixed(1) + '%'
+    template: function (val, row) {
+      return (row.displays / row.loads * 100).toFixed(1) + '%'
     },
-    sortBy: function(row) {
-      return row.displayRate
+    sortBy: function (row) {
+      return row.displays / row.loads
     }
   }
 ]
 
 module.exports = createReactClass({
   render() {
-    return (<div>
-      <ReactPivot rows={rows}
-        dimensions={dimensions}
-        reduce={reducer}
-        calculations={calculations}
-        activeDimensions={['Date', 'Host']} />
-    </div>)
+    return (<ReactPivot rows={rows}
+      dimensions={dimensions}
+      reduce={reducer}
+      calculations={calculations}
+      activeDimensions={['Date', 'Host']} />)
   }
 })
