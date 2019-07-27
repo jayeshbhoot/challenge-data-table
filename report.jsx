@@ -37,9 +37,21 @@ const reducer = function (row, acc) {
 }
 
 const calculations = [
-  { title: 'Impressions', value: 'impressions', template: templateForReducedVals },
-  { title: 'Loads', value: 'loads', template: templateForReducedVals },
-  { title: 'Displays', value: 'displays', template: templateForReducedVals },
+  {
+    title: 'Impressions',
+    value: 'impressions',
+    template: function (val, row) { return `${val || 0}` }
+  },
+  {
+    title: 'Loads',
+    value: 'loads',
+    template: function (val, row) { return `${val || 0}` }
+  },
+  {
+    title: 'Displays',
+    value: 'displays',
+    template: function (val, row) { return `${val || 0}` }
+  },
   {
     title: 'Load Rate',
     value: 'loadRate',
@@ -61,10 +73,6 @@ const calculations = [
     }
   }
 ]
-
-const templateForReducedVals = function (val, row) {
-  return `${val || 0}`
-}
 
 const templateForPercentVals = function (numerator, denominator) {
   const rate = (numerator / denominator) || 0
