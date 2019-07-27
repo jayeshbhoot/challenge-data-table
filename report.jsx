@@ -1,6 +1,6 @@
-var React = require('react')
-var ReactPivot = require('react-pivot')
-var createReactClass = require('create-react-class')
+const React = require('react')
+const ReactPivot = require('react-pivot')
+const createReactClass = require('create-react-class')
 
 const rows = require('./data.json')
 
@@ -27,27 +27,22 @@ const dimensions = [
   { value: 'timezoneOffset', title: 'Timezone' }
 ]
 
-var reducer = function (row, acc) {
-  // acc.impressions = row.type === 'impression' ? (acc.impressions || 0) : (acc.impressions || 0) + 1
+const reducer = function (row, acc) {
   // acc.impressions = (acc.impressions || 0) + (row.type === 'impression' ? 1 : 0)
-  if (row.type === 'impression')
-    acc.impressions = (acc.impressions || 0) + 1
-
-  if (row.type === 'load')
-    acc.loads = (acc.loads || 0) + 1
-
-  if (row.type === 'display')
-    acc.displays = (acc.displays || 0) + 1
+  if (row.type === 'impression') { acc.impressions = (acc.impressions || 0) + 1 }
+  if (row.type === 'load') { acc.loads = (acc.loads || 0) + 1 }
+  if (row.type === 'display') { acc.displays = (acc.displays || 0) + 1 }
 
   return acc
 }
 
-var calculations = [
+const calculations = [
   { title: 'Impressions', value: 'impressions', template: templateForReducedVals },
   { title: 'Loads', value: 'loads', template: templateForReducedVals },
   { title: 'Displays', value: 'displays', template: templateForReducedVals },
   {
-    title: 'Load Rate', value: 'loadRate',
+    title: 'Load Rate',
+    value: 'loadRate',
     template: function (val, row) {
       return templateForPercentVals(row.loads, row.impressions)
     },
@@ -56,7 +51,8 @@ var calculations = [
     }
   },
   {
-    title: 'Display Rate', value: 'displayRate',
+    title: 'Display Rate',
+    value: 'displayRate',
     template: function (val, row) {
       return templateForPercentVals(row.displays, row.loads)
     },
@@ -66,7 +62,7 @@ var calculations = [
   }
 ]
 
-const templateForReducedVals = function (val) {
+const templateForReducedVals = function (val, row) {
   return `${val || 0}`
 }
 
