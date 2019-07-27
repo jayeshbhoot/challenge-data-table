@@ -1,3 +1,35 @@
 body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
+
+.reactPivot-level-0 {
+  background-color: #dcedc1;
+}
+
+.reactPivot-level-1 {
+  background-color: #dcede1;
+}
+
+.reactPivot-level-2 {
+  background-color: #dcedf1;
+}
+
+.reactPivot-level-3 {
+  background-color: #dcfdc1;
+}
+
+.reactPivot-level-4 {
+  background-color: #dcfde1;
+}
+
+.reactPivot-level-5 {
+  background-color: #dcfdf1;
+}
+
+.reactPivot-indent {
+  background-color: white;
+}
+
+tr:hover {
+  background: none;
+}
